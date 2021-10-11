@@ -11,17 +11,36 @@ module.exports.mostrar = (req,res)=>{
     })
 }
 
+/*router.get('/models/paciente', async(req,res)=>{
+    const _id=req.params.id;
+
+    try{
+
+        const paciente= await paciente.findOne({_id});
+        res.json(paciente);
+
+    } catch (error){
+
+    }
+})*/
+
 //Crear
 module.exports.crear = (req, res)=>{
     console.log(req.body)
     const paciente = new Paciente({
-        nombre: req.body.nombre,
-        edad: req.body.edad
+        nombres: req.body.nombres,
+        apellidos: req.body.apellidos,
+        edad: req.body.edad,
+        email: req.body.email,
+        direccion: req.body.direccion,
+        telefono: req.body.telefono,
+        date: req.body.date
+        
     })
-    paciente.save(function(error,alumno){
+    paciente.save(function(error){
         if(error){
             return res.status(500).json({
-                message: 'Error al crear el Alumno'
+                message: 'Error al crear'
             })
         }
         res.redirect('/')
@@ -31,12 +50,19 @@ module.exports.crear = (req, res)=>{
 //Editar
 module.exports.editar = (req,res)=>{
     const id = req.body.id_editar
-    const nombre = req.body.nombre_editar
+    const nombres = req.body.nombre_editar
+    const apellidos = req.body.apellido_editar
     const edad = req.body.edad_editar
-    Paciente.findByIdAndUpdate(id, {nombre, edad}, (error, paciente)=>{
+    const email = req.body.email_editar
+    const direccion = req.body.direccion_editar
+    const telefono = req.body.telefono_editar
+    const date = req.body.date_editar
+
+
+    Paciente.findByIdAndUpdate(id, {nombres, apellidos, edad, email, direccion, telefono, date}, (error, paciente)=>{
         if(error){
             return res.status(500).json({
-                message: 'Error actualizando el Alumno'
+                message: 'Error actualizando información'
             })
         }
         res.redirect('/')
@@ -49,7 +75,7 @@ module.exports.borrar = (req, res)=>{
     Paciente.findByIdAndRemove(id, (error, alumno)=>{
         if(error){
             return res.status(500).json({
-                message: 'Error eliminando el Alumno'
+                message: 'Error eliminando cliente'
             })
         }
         res.redirect('/')

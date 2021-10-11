@@ -19,6 +19,8 @@ app.get('/',(req,res)=>{
     res.send('hola cavernicolas')
 }) 
 
-app.listen(3000, ()=>{
-    console.log('servidor bien')
-})
+app.set('port', process.env.PORT || 3000);
+app.listen(app.get('port'), ()=>{
+
+    console.log('server on port', app.get('port'));
+});
